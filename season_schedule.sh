@@ -30,30 +30,26 @@ LOGFILE=schedule_"$YEAR".log
 TXTFILE=schedule_"$YEAR".txt
 CSVFILE=schedule_"$YEAR"_urls.csv
 
-touch $TXTFILE ;
 echo "------------------------------------------------- BACKUP "$TXTFILE" -------------------------------------------------" >> $LOGFILE;
+touch $TXTFILE ;
 cat $TXTFILE >> $LOGFILE;
+rm $TXTFILE ;
 
-touch $CSVFILE ; 
 echo "---------------------------------------------- BACKUP "$CSVFILE" -----------------------------------------------" >> $LOGFILE;
+touch $CSVFILE ; 
 cat $CSVFILE >> $LOGFILE;
+rm $CSVFILE ;
 
 echo "-------------------------------------------------- UPDATING schedule_"$YEAR" --------------------------------------------------"  >> $LOGFILE;
 
 for MONTH in october november december january february march april may june ;
 do
     echo "Getting "$YEAR"/"$MONTH" ..."
-    wget "$BKREFURL"leagues/NBA_"$YEAR"_games-"$MONTH".html -O - 2&>> $LOGFILE | grep 'data-stat="box_score_text"' >> $TXTFILE
-    grep -v aria schedule_$YEAR.txt | cut -d "<" -f "22-30" | cut -d '"' -f 2 > $CSVFILE
-    sed -i -e "s_/boxscores_"$BKREF_URL"boxscores_" $CSVFILE
+    wget "$BKREFURL"leagues/NBA_"$YEAR"_games-"$MONTH".html -O - 2>> $LOGFILE | grep 'data-stat="box_score_text"' >> $TXTFILE
+    grep boxscores $TXTFILE | sed "s:<tbody>::" | cut -d "<" -f "22-30" | cut -d '"' -f 2 > $CSVFILE
+    sed -i -e "s_boxscores_"$BKREFURL"boxscores_" $CSVFILE
 done
 
 echo "------------------------------------------------ DONE UPDATING schedule_"$YEAR" -----------------------------------------------"  >> $LOGFILE;
 
-read NUMGAMES <<< $(wc -l $CSVFILE )
-if test $NUMGAMES -lt 1 ;
-then
-    exit 1
-fi
-exit 0
 
