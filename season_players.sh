@@ -53,7 +53,7 @@ wget "$BKREFURL""$PAGEPATH" -O - 2>> $LOGFILE | grep 'data-stat="player"' >> $TX
 grep "full_table" $TXTFILE | cut -d "<" -f 6 | cut -d '"' -f 2 > $CSVFILE
 paste -d " " $CSVFILE $CSVFILE > $CSVFILE.tmp ;
 sed -i -e "s_/players_"$BKREFURL"players_" \
-       -e "s_.html_/gamelog/2017_"         \
+       -e "s_.html_/gamelog/"$YEAR"_"      \
        -e "s_ /players/./_ _"              \
        -e "s:.html:_"$YEAR".html:"         \
        $CSVFILE.tmp
