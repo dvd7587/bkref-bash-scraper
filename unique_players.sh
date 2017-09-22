@@ -1,19 +1,19 @@
 #! /bin/bash -x
 
-touch allnames.csv ;
-touch uniquenames.csv ; 
+touch all_codes.csv ;
+touch unique_codes.csv ; 
 
-for CSVFILE in `ls players*csv`
+for CSVFILE in `ls players_*_urls.csv`
 do
-    cut $CSVFILE -d " " -f 2 | cut -d "_" -f 1 >> allnames.csv
+    cut $CSVFILE -d " " -f 2 | cut -d "_" -f 1 >> all_codes.csv
 done
 
 while read PLAYER
 do
-    COUNT=`grep $PLAYER uniquenames.csv | wc -l`
+    COUNT=`grep $PLAYER unique_codes.csv | wc -l`
     if [[ $COUNT == 0 ]]
     then
-        echo $PLAYER >> uniquenames.csv
+        echo $PLAYER >> unique_codes.csv
     fi
-done < allnames.csv
+done < all_codes.csv
 
