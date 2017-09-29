@@ -21,7 +21,7 @@ done |
     do 
         FILEBASE="${NAME%.*}" 
         echo $FILEBASE
-        wget $URL -qO - 2>"$FILEBASE".log | \
+        wget $URL -qO - 2> logs/"$FILEBASE".log | \
             grep "pgl_basic" | \
             sed -e 's:data-stat="game_location" ><:>v<:g' \
                 -e 's_></_> </_g' \
@@ -31,7 +31,9 @@ done |
                 -e "s_;X;_;_g" \
                 -e "s_;;_;_g" \
                 -e 's_ (_;_' \
-                -e 's_)__' | \
+                -e 's_)__' \
+                -e 's_;0;0; _;0;0;.000_g' \
+                -e 's_; ;_;_g' | \
             grep -v "Table" | \
             grep "[A-Z]" \
             >> "$FOLDER"/"$CODE".csv ; 

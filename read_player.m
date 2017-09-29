@@ -14,7 +14,7 @@
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## -*- texinfo -*- 
-## @deftypefn {Function File} {@var{retval} =} read_player (@var{input1}, @var{input2})
+## @deftypefn {Function File} {@var{player_struct} =} read_player (@var{filename})
 ##
 ## @seealso{}
 ## @end deftypefn
